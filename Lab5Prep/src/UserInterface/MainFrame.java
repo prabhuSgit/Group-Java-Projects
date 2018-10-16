@@ -27,16 +27,16 @@ public class MainFrame extends javax.swing.JFrame {
         Commiting to check the commiting
         */
         //Urja's commit for a test
+        int i=10;
     }
     /*
     Testing commits - Prakruthi
     Prabhu's testing comment :)
     */
-<<<<<<< HEAD
     //Prakruthi
-=======
+
     /*Prabhu*/
->>>>>>> 81ffd58ceb744f06b2548a799b09be855a79778f
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
