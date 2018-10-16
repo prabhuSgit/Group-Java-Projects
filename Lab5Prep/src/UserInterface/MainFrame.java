@@ -27,7 +27,7 @@ public class MainFrame extends javax.swing.JFrame {
         Commiting to check the commiting
         */
         //Urja's commit for a test
-        int x=10;
+        int x=0;
         System.out.print(x);
         
     }
