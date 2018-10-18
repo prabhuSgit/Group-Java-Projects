@@ -5,6 +5,7 @@
  */
 package UserInterface;
 
+import Business.Abstract.User;
 import Business.Users.Admin;
 import Business.Users.Customer;
 import Business.Users.Supplier;
@@ -34,16 +35,16 @@ public class AdminCreateScreen extends javax.swing.JPanel {
      */
     private JPanel panelRight;
     private Admin admin;
+
     public AdminCreateScreen(JPanel panelRight, Admin admin) {
         initComponents();
         this.panelRight = panelRight;
         this.admin = admin;
     }
-    
+
     /*public boolean passwordCheck(){
         
     }*/
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,14 +87,29 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
         radioUserBtnGrp.add(radioCustomer);
         radioCustomer.setText("Customer");
+        radioCustomer.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                radiobtngrp(evt);
+            }
+        });
         radioCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioCustomerActionPerformed(evt);
+                groupingbtn(evt);
             }
         });
 
         radioUserBtnGrp.add(radioSupplier);
         radioSupplier.setText("Supplier");
+        radioSupplier.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                radiobtngrp(evt);
+            }
+        });
+        radioSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                groupingbtn(evt);
+            }
+        });
 
         btnBack.setText("< BACK");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -168,25 +184,29 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         // TODO add your handling code here:
         //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         //Date date = new Date();
-        
+
         if(radioUserBtnGrp.isSelected(radioCustomer.getModel())){
-            Customer customer = new Customer(new Date(),txtPword.getText(), txtUser.getText());
+            Customer customer = new Customer(new Date(), txtPword.getText(), txtUser.getText());
             admin.getCustDir().getCustomerList().add(customer);
             JOptionPane.showMessageDialog(this, "Customer created successfully");
-            }else if(radioUserBtnGrp.isSelected(radioSupplier.getModel())){
+            txtUser.setText("");
+            txtPword.setText("");
+            txtRePword.setText("");
+            radioCustomer.setSelected(false);
+            //radioCustomer.setSelected(false);
+        } else if (radioUserBtnGrp.isSelected(radioSupplier.getModel())) {
             Supplier supplier = new Supplier(txtPword.getText(), txtUser.getText());
             admin.getSuppDir().getSupplierList().add(supplier);
             JOptionPane.showMessageDialog(this, "Supplier created successfully");
-            }
-        else{
+            txtUser.setText("");
+            txtPword.setText("");
+            txtRePword.setText("");
+            radioSupplier.setSelected(false);
+            
+        } else {
             JOptionPane.showMessageDialog(this, "Please select a type");
         }
     }//GEN-LAST:event_btnCreateActionPerformed
-
-    private void radioCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCustomerActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_radioCustomerActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
 
@@ -195,7 +215,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         Component component = componentArray[componentArray.length - 1];
         AdminMainScreen adminMainScreen = (AdminMainScreen) component;
         adminMainScreen.populate();
-        CardLayout layout = (CardLayout)panelRight.getLayout();
+        CardLayout layout = (CardLayout) panelRight.getLayout();
         layout.previous(panelRight);
     }//GEN-LAST:event_btnBackActionPerformed
 
@@ -209,21 +229,56 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         checkForButtonVisibility();
     }//GEN-LAST:event_txtPwordKeyTyped
 
-    public boolean passwordPatternCoorect(){
-        return false;
-    }
-    
-    public void checkForButtonVisibility(){
-        if(!txtUser.getText().isEmpty() && !txtPword.getText().isEmpty() && !txtRePword.getText().isEmpty()){
-            btnCreate.setEnabled(true);
+    private void groupingbtn(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_groupingbtn
+        // TODO add your handling code here:
+        if (radioCustomer.isSelected()) {
+            for (User customer : admin.custDir.getCustomerList()) {
+                if (customer.getUserName().contains(txtUser.getText())) {
+                    JOptionPane.showMessageDialog(null, "This User name already Exist \n Try other User name");
+                }
+            }
+
+        } else if (radioSupplier.isSelected()) {
+            for (User supplier : admin.suppDir.getSupplierList()) {
+                if (supplier.getUserName().contains(txtUser.getText())) {
+                    JOptionPane.showMessageDialog(null, "This User name already Exist \n Try other User name");
+                }
+            }
         }
-        else{
-            btnCreate.setEnabled(false);
-        }
+
+
+    }//GEN-LAST:event_groupingbtn
+
+    private void radiobtngrp(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radiobtngrp
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radiobtngrp
+
+    public boolean passwordPatternCoorect() {
+        Pattern p = Pattern.compile("(^A-Za-z0-9@&$)");
+       Matcher m = p.matcher(txtPword.getText());
+
+       boolean b = m.find();
+       if(b == true){
+           System.out.println("There is special character in my string");
+           return false;
+       }
+       else{
+           System.out.println("There is no speacial character");
+           return true;
+       }
         
     }
-    
-    
+
+    public void checkForButtonVisibility() {
+        if (!txtUser.getText().isEmpty() && !txtPword.getText().isEmpty() && !txtRePword.getText().isEmpty()) {
+            btnCreate.setEnabled(true);
+        } else {
+            btnCreate.setEnabled(false);
+        }
+
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCreate;
