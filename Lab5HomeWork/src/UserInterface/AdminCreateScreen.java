@@ -13,6 +13,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -70,6 +72,12 @@ public class AdminCreateScreen extends javax.swing.JPanel {
             }
         });
 
+        txtUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUserKeyTyped(evt);
+            }
+        });
+
         jLabel1.setText("username:");
 
         jLabel2.setText("password:");
@@ -91,6 +99,12 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
+            }
+        });
+
+        txtPword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPwordKeyTyped(evt);
             }
         });
 
@@ -152,6 +166,9 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
+        //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        //Date date = new Date();
+        
         if(radioUserBtnGrp.isSelected(radioCustomer.getModel())){
             Customer customer = new Customer(new Date(),txtPword.getText(), txtUser.getText());
             admin.getCustDir().getCustomerList().add(customer);
@@ -159,7 +176,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
             }else if(radioUserBtnGrp.isSelected(radioSupplier.getModel())){
             Supplier supplier = new Supplier(txtPword.getText(), txtUser.getText());
             admin.getSuppDir().getSupplierList().add(supplier);
-              JOptionPane.showMessageDialog(this, "Supplier created successfully");
+            JOptionPane.showMessageDialog(this, "Supplier created successfully");
             }
         else{
             JOptionPane.showMessageDialog(this, "Please select a type");
@@ -182,11 +199,27 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         layout.previous(panelRight);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void txtUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyTyped
+        // TODO add your handling code here:
+        checkForButtonVisibility();
+    }//GEN-LAST:event_txtUserKeyTyped
+
+    private void txtPwordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPwordKeyTyped
+        // TODO add your handling code here:
+        checkForButtonVisibility();
+    }//GEN-LAST:event_txtPwordKeyTyped
+
     public boolean passwordPatternCoorect(){
         return false;
     }
     
     public void checkForButtonVisibility(){
+        if(!txtUser.getText().isEmpty() && !txtPword.getText().isEmpty() && !txtRePword.getText().isEmpty()){
+            btnCreate.setEnabled(true);
+        }
+        else{
+            btnCreate.setEnabled(false);
+        }
         
     }
     

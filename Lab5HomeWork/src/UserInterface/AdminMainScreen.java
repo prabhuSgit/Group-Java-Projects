@@ -79,10 +79,10 @@ public class AdminMainScreen extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCreate))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(btnCreate)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(99, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -116,6 +116,16 @@ public class AdminMainScreen extends javax.swing.JPanel {
             row[1]=s.getDirectory().getProductList().size();
             dtm.addRow(row);
         }
+        
+        DefaultTableModel dtm2 = (DefaultTableModel)tableCust.getModel();
+       dtm2.setRowCount(0);
+       for(User u: admin.getCustDir().getCustomerList()){
+           Customer c = (Customer)u;
+           Object[] row = new Object[dtm2.getColumnCount()];
+           row[0]=c;
+           row[1]=c.getDateCreated();
+           dtm2.addRow(row);
+       }
 
     }
     
