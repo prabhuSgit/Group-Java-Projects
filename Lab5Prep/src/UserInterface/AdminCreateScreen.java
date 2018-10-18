@@ -10,6 +10,7 @@ import Business.Users.Customer;
 import Business.Users.Supplier;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -46,7 +47,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        radioUserBtnGrp = new javax.swing.ButtonGroup();
         btnCreate = new javax.swing.JButton();
         txtUser = new javax.swing.JTextField();
         txtPword = new javax.swing.JTextField();
@@ -77,7 +78,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
         jLabel3.setText("re-enter password :");
 
-        buttonGroup1.add(radioCustomer);
+        radioUserBtnGrp.add(radioCustomer);
         radioCustomer.setText("Customer");
         radioCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,7 +86,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
             }
         });
 
-        buttonGroup1.add(radioSupplier);
+        radioUserBtnGrp.add(radioSupplier);
         radioSupplier.setText("Supplier");
 
         btnBack.setText("< BACK");
@@ -152,6 +153,18 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
+        if(radioUserBtnGrp.isSelected(radioCustomer.getModel())){
+            Customer customer = new Customer(new Date(),txtPword.getText(), txtUser.getText());
+            admin.getCustDir().getCustomerList().add(customer);
+            JOptionPane.showMessageDialog(this, "Customer created successfully");
+            }else if(radioUserBtnGrp.isSelected(radioSupplier.getModel())){
+            Supplier supplier = new Supplier(txtPword.getText(), txtUser.getText());
+            admin.getSuppDir().getSupplierList().add(supplier);
+              JOptionPane.showMessageDialog(this, "Supplier created successfully");
+            }
+        else{
+            JOptionPane.showMessageDialog(this, "Please select a type");
+        }
         
     }//GEN-LAST:event_btnCreateActionPerformed
 
@@ -162,8 +175,12 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
 
-        CardLayout layout = (CardLayout)panelRight.getLayout();
         panelRight.remove(this);
+        Component[] componentArray = panelRight.getComponents();
+        Component component = componentArray[componentArray.length - 1];
+        AdminMainScreen adminMainScreen = (AdminMainScreen) component;
+        adminMainScreen.populate();
+        CardLayout layout = (CardLayout)panelRight.getLayout();
         layout.previous(panelRight);
     }//GEN-LAST:event_btnBackActionPerformed
 
@@ -188,12 +205,12 @@ public class AdminCreateScreen extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCreate;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JRadioButton radioCustomer;
     private javax.swing.JRadioButton radioSupplier;
+    private javax.swing.ButtonGroup radioUserBtnGrp;
     private javax.swing.JTextField txtPword;
     private javax.swing.JTextField txtRePword;
     private javax.swing.JTextField txtUser;
