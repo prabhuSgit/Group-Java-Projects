@@ -87,6 +87,11 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
         radioUserBtnGrp.add(radioCustomer);
         radioCustomer.setText("Customer");
+        radioCustomer.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                radiobtngrp(evt);
+            }
+        });
         radioCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 groupingbtn(evt);
@@ -95,6 +100,11 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
         radioUserBtnGrp.add(radioSupplier);
         radioSupplier.setText("Supplier");
+        radioSupplier.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                radiobtngrp(evt);
+            }
+        });
         radioSupplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 groupingbtn(evt);
@@ -175,22 +185,24 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         //Date date = new Date();
 
-        if (radioUserBtnGrp.isSelected(radioCustomer.getModel())) {
+        if(radioUserBtnGrp.isSelected(radioCustomer.getModel())){
             Customer customer = new Customer(new Date(), txtPword.getText(), txtUser.getText());
             admin.getCustDir().getCustomerList().add(customer);
             JOptionPane.showMessageDialog(this, "Customer created successfully");
-            txtUser.setText(" ");
-            txtPword.setText(" ");
-            txtRePword.setText(" ");
+            txtUser.setText("");
+            txtPword.setText("");
+            txtRePword.setText("");
             radioCustomer.setSelected(false);
+            //radioCustomer.setSelected(false);
         } else if (radioUserBtnGrp.isSelected(radioSupplier.getModel())) {
             Supplier supplier = new Supplier(txtPword.getText(), txtUser.getText());
             admin.getSuppDir().getSupplierList().add(supplier);
             JOptionPane.showMessageDialog(this, "Supplier created successfully");
-            txtUser.setText(" ");
-            txtPword.setText(" ");
-            txtRePword.setText(" ");
+            txtUser.setText("");
+            txtPword.setText("");
+            txtRePword.setText("");
             radioSupplier.setSelected(false);
+            
         } else {
             JOptionPane.showMessageDialog(this, "Please select a type");
         }
@@ -237,8 +249,24 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
     }//GEN-LAST:event_groupingbtn
 
+    private void radiobtngrp(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radiobtngrp
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radiobtngrp
+
     public boolean passwordPatternCoorect() {
-        return false;
+        Pattern p = Pattern.compile("(^A-Za-z0-9@&$)");
+       Matcher m = p.matcher(txtPword.getText());
+
+       boolean b = m.find();
+       if(b == true){
+           System.out.println("There is special character in my string");
+           return false;
+       }
+       else{
+           System.out.println("There is no speacial character");
+           return true;
+       }
+        
     }
 
     public void checkForButtonVisibility() {
