@@ -65,6 +65,11 @@ public class AdminCreateScreen extends javax.swing.JPanel {
             }
         });
 
+        txtRePword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRePwordActionPerformed(evt);
+            }
+        });
         txtRePword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtRePwordKeyTyped(evt);
@@ -175,6 +180,10 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         
         
     }//GEN-LAST:event_txtRePwordKeyTyped
+
+    private void txtRePwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRePwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRePwordActionPerformed
 
     public boolean passwordPatternCoorect(){
         return false;

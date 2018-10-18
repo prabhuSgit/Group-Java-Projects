@@ -23,7 +23,6 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         adminUser = new Admin();
-      
     }
      /**
      * This method is called from within the constructor to initialize the form.
