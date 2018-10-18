@@ -124,6 +124,12 @@ public class AdminCreateScreen extends javax.swing.JPanel {
             }
         });
 
+        txtRePword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRePwordKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -182,28 +188,24 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-        //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        //Date date = new Date();
-
+        if(!passwordPatternCorrect()){
+            JOptionPane.showMessageDialog(this, "Password must contain alphanumeric values and @ $ and & only");
+            return;
+        }
+        if(!txtPword.getText().equals(txtRePword.getText())){
+            JOptionPane.showMessageDialog(this, "Password dont match!");
+            return;
+        }
         if(radioUserBtnGrp.isSelected(radioCustomer.getModel())){
-            Customer customer = new Customer(new Date(), txtPword.getText(), txtUser.getText());
+            Customer customer = new Customer(new Date(),txtPword.getText(), txtUser.getText());
             admin.getCustDir().getCustomerList().add(customer);
             JOptionPane.showMessageDialog(this, "Customer created successfully");
-            txtUser.setText("");
-            txtPword.setText("");
-            txtRePword.setText("");
-            radioCustomer.setSelected(false);
-            //radioCustomer.setSelected(false);
-        } else if (radioUserBtnGrp.isSelected(radioSupplier.getModel())) {
+        }else if(radioUserBtnGrp.isSelected(radioSupplier.getModel())){
             Supplier supplier = new Supplier(txtPword.getText(), txtUser.getText());
             admin.getSuppDir().getSupplierList().add(supplier);
             JOptionPane.showMessageDialog(this, "Supplier created successfully");
-            txtUser.setText("");
-            txtPword.setText("");
-            txtRePword.setText("");
-            radioSupplier.setSelected(false);
-            
-        } else {
+        }
+        else{
             JOptionPane.showMessageDialog(this, "Please select a type");
         }
     }//GEN-LAST:event_btnCreateActionPerformed
@@ -253,8 +255,32 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_radiobtngrp
 
-    public boolean passwordPatternCoorect() {
-        Pattern p = Pattern.compile("(^A-Za-z0-9@&$)");
+    private void txtRePwordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRePwordKeyTyped
+        // TODO add your handling code here:
+        checkForButtonVisibility();
+        /*if(txtRePword.getText().equals(txtPword.getText())){
+            txtRePword.setBackground(Color.green);
+            labelRePassword.setText("Matches");
+        }else{
+            txtRePword.setBackground(Color.red);
+            labelRePassword.setText("Doesnt match");
+        }*/
+        String check = ""+evt.getKeyChar();
+        String compare = txtRePword.getText();
+        if(!check.isEmpty()){
+            compare += check;
+        }
+        if(txtPword.getText().equals(compare)){
+            txtPword.setBackground(Color.white);
+            btnCreate.setEnabled(true);
+        }else{
+            txtRePword.setBackground(Color.red);
+            btnCreate.setEnabled(false);
+        }
+    }//GEN-LAST:event_txtRePwordKeyTyped
+
+    public boolean passwordPatternCorrect() {
+       Pattern p = Pattern.compile("(^A-Za-z0-9@&$)");
        Matcher m = p.matcher(txtPword.getText());
 
        boolean b = m.find();

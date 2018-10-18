@@ -153,6 +153,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtRePword">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtRePwordKeyTyped"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
