@@ -123,6 +123,7 @@
         <Property name="text" type="java.lang.String" value="Customer"/>
       </Properties>
       <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="radiobtngrp"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="groupingbtn"/>
       </Events>
     </Component>
@@ -134,6 +135,7 @@
         <Property name="text" type="java.lang.String" value="Supplier"/>
       </Properties>
       <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="radiobtngrp"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="groupingbtn"/>
       </Events>
     </Component>
@@ -151,6 +153,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtRePword">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtRePwordKeyTyped"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
