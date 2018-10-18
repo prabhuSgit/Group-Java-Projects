@@ -30,11 +30,9 @@
                           <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtUser" min="-2" pref="173" max="-2" attributes="0"/>
-                          <Component id="txtPword" min="-2" pref="173" max="-2" attributes="0"/>
-                          <Component id="txtRePword" min="-2" pref="173" max="-2" attributes="0"/>
-                          <Component id="btnCreate" alignment="0" min="-2" pref="173" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txtUser" pref="173" max="32767" attributes="0"/>
+                          <Component id="btnCreate" alignment="0" pref="173" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -42,6 +40,8 @@
                                   <Component id="radioCustomer" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <Component id="txtPword" max="32767" attributes="0"/>
+                          <Component id="txtRePword" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -65,13 +65,13 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtPword" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtPword" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtRePword" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtRePword" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="radioCustomer" min="-2" max="-2" attributes="0"/>
@@ -94,14 +94,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtUser">
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtPword">
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtRePword">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtRePwordActionPerformed"/>
-        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtRePwordKeyTyped"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -144,6 +136,10 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="txtPword">
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="txtRePword">
     </Component>
   </SubComponents>
 </Form>
