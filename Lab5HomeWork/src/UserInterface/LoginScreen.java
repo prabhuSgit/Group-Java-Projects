@@ -99,6 +99,7 @@ public class LoginScreen extends javax.swing.JPanel {
                 else
                 {
                     JOptionPane.showMessageDialog(this, "Password Incorrect! Please enter the correct password.");
+                    return;
                 }
             }
         }
@@ -116,6 +117,7 @@ public class LoginScreen extends javax.swing.JPanel {
                 else
                 {
                     JOptionPane.showMessageDialog(this, "Password Incorrect! Please enter the correct password.");
+                    return;
                 }
             }
         }
