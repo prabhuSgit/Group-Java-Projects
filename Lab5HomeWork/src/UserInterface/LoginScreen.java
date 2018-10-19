@@ -26,6 +26,7 @@ public class LoginScreen extends javax.swing.JPanel {
     List<User> list;
     JPanel panelRight;  
     private Admin admin;
+    private User user;
     public LoginScreen(JPanel panelRight, List<User> list, Admin admin) {
         initComponents();
         this.list = list;
@@ -88,7 +89,35 @@ public class LoginScreen extends javax.swing.JPanel {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
-        
+        if(txtPword.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please fill Password Field");
+        }else{  //working good for only one entry in create
+            if(list == admin.getCustDir().getCustomerList()){
+            for(User list: admin.getCustDir().getCustomerList()){
+                 comboUser.addItem(list);
+                 if (list.getPassword().equals(txtPword.getText())){
+                 JOptionPane.showMessageDialog(null, "login");
+                 CardLayout layout = (CardLayout)panelRight.getLayout();
+                panelRight.add(new SuccessScreen(panelRight, user));
+                layout.next(panelRight);
+                }
+            else
+                JOptionPane.showMessageDialog(null, "User name and Password do not match");
+            }
+        } else if (list == admin.getSuppDir().getSupplierList()){
+        for(User list: admin.getSuppDir().getSupplierList()){
+                 comboUser.addItem(list);
+                 
+            if (list.getPassword().equals(txtPword.getText())){
+                 JOptionPane.showMessageDialog(null, "login");
+                 CardLayout layout = (CardLayout)panelRight.getLayout();
+                panelRight.add(new SuccessScreen(panelRight, user));
+                layout.next(panelRight);
+        }
+            
+        }
+        }
+        }
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     
@@ -101,12 +130,14 @@ public class LoginScreen extends javax.swing.JPanel {
             txtTitle.setText("Customer Login Screen");
             for(User list: admin.getCustDir().getCustomerList()){
                 comboUser.addItem(list);
+                              
             }
-        }
+               
+       }
         else{
             txtTitle.setText("Supplier Login Screen");
             for(User list: admin.getSuppDir().getSupplierList()){
-                comboUser.addItem(list);
+                comboUser.addItem(list); 
             }
         }
     }
