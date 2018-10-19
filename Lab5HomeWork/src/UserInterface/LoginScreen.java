@@ -88,9 +88,10 @@ public class LoginScreen extends javax.swing.JPanel {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         if(list == admin.getCustDir().getCustomerList()){
+            User selectedUser = (User)comboUser.getSelectedItem();
             for(User user : admin.getCustDir().getCustomerList()){
                 System.out.println("In for 1");
-                if(user.getPassword().equals(txtPswrd.getText())){
+                if(selectedUser.getPassword().equals(txtPswrd.getText())){
                     CardLayout layout = (CardLayout)panelRight.getLayout();
                     panelRight.add(new SuccessScreen(user));
                     layout.next(panelRight);
@@ -128,8 +129,8 @@ public class LoginScreen extends javax.swing.JPanel {
         //only customer or suppliers should be listed based on the selection
         if(list == admin.getCustDir().getCustomerList()){
             txtTitle.setText("Customer Login Screen");
-            for(User user: admin.getCustDir().getCustomerList()){
-                comboUser.addItem(user);
+            for(User list: admin.getCustDir().getCustomerList()){
+                comboUser.addItem(list);
             }
         }
         else{
