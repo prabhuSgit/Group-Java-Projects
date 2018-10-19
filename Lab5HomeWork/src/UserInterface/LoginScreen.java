@@ -6,6 +6,7 @@
 package UserInterface;
 
 import Business.Abstract.User;
+import Business.Users.Admin;
 import Business.Users.Customer;
 import Business.Users.Supplier;
 import java.awt.CardLayout;
@@ -23,11 +24,13 @@ public class LoginScreen extends javax.swing.JPanel {
      * Creates new form LoginScreen
      */
     List<User> list;
-    JPanel panelRight;
-    public LoginScreen(JPanel panelRight, List<User> list) {
+    JPanel panelRight;  
+    private Admin admin;
+    public LoginScreen(JPanel panelRight, List<User> list, Admin admin) {
         initComponents();
         this.list = list;
         this.panelRight = panelRight;
+        this.admin = admin;
         initialize();
     }
 
@@ -92,9 +95,18 @@ public class LoginScreen extends javax.swing.JPanel {
     private void initialize(){
         //text should either be "Supplier Login Screen" OR "Customer Login Screen"
         //Based on the selection
-        txtTitle.setText("****** Login Screen");
         comboUser.removeAllItems();
         //only customer or suppliers should be listed based on the selection
+        if(list == admin.getCustDir().getCustomerList()){
+            txtTitle.setText("Customer Login Screen");
+            for(User list: admin.getCustDir().getCustomerList()){
+                comboUser.addItem(list);
+            }
+        }
+        else{
+            txtTitle.setText("Supplier Login Screen");
+            
+        }
     }
     
 

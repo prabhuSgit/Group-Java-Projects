@@ -200,6 +200,14 @@ public class AdminCreateScreen extends javax.swing.JPanel {
             Customer customer = new Customer(new Date(),txtPword.getText(), txtUser.getText());
             admin.getCustDir().getCustomerList().add(customer);
             JOptionPane.showMessageDialog(this, "Customer created successfully");
+<<<<<<< Updated upstream
+        }else if(radioUserBtnGrp.isSelected(radioSupplier.getModel())){
+            Supplier supplier = new Supplier(txtPword.getText(), txtUser.getText());
+            admin.getSuppDir().getSupplierList().add(supplier);
+            JOptionPane.showMessageDialog(this, "Supplier created successfully");
+        }
+        else{
+=======
             txtUser.setText("");
             txtPword.setText("");
             txtRePword.setText("");
@@ -213,7 +221,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
             txtRePword.setText("");
             radioSupplier.setSelected(false);
         } else {
-
+>>>>>>> Stashed changes
             JOptionPane.showMessageDialog(this, "Please select a type");
         }
     }//GEN-LAST:event_btnCreateActionPerformed
