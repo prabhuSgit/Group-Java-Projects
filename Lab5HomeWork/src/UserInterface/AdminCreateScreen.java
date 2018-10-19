@@ -188,14 +188,18 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-        if(!passwordPatternCorrect()){
-            JOptionPane.showMessageDialog(this, "Password must contain alphanumeric values and @ $ and & only");
+        if(passwordPatternCorrect()==true){
+            JOptionPane.showMessageDialog(this, "Password not as per the Password policy below:\n"
+                    + "A special character\n"
+                    + "A number\n"
+                    + "A uppercase\n"
+                    + "A lowercase");
             return;
         }
-        if(!txtPword.getText().equals(txtRePword.getText())){
+        /*if(!txtPword.getText().equals(txtRePword.getText())){
             JOptionPane.showMessageDialog(this, "Password dont match!");
             return;
-        }
+        }*/
         if(radioUserBtnGrp.isSelected(radioCustomer.getModel())){
             Customer customer = new Customer(new Date(),txtPword.getText(), txtUser.getText());
             admin.getCustDir().getCustomerList().add(customer);
@@ -247,8 +251,6 @@ public class AdminCreateScreen extends javax.swing.JPanel {
                 }
             }
         }
-
-
     }//GEN-LAST:event_groupingbtn
 
     private void radiobtngrp(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radiobtngrp
@@ -258,6 +260,18 @@ public class AdminCreateScreen extends javax.swing.JPanel {
     private void txtRePwordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRePwordKeyTyped
         // TODO add your handling code here:
         checkForButtonVisibility();
+        String check = ""+evt.getKeyChar();
+        String compare = txtRePword.getText();
+        if(!check.isEmpty()){
+            compare += check;
+        }
+        if(txtPword.getText().equals(compare)){
+            btnCreate.setEnabled(true);
+            txtRePword.setBackground(Color.white);
+        }else{
+            btnCreate.setEnabled(false);
+            txtRePword.setBackground(Color.red);
+        }
         /*if(txtRePword.getText().equals(txtPword.getText())){
             txtRePword.setBackground(Color.green);
             labelRePassword.setText("Matches");
@@ -265,25 +279,13 @@ public class AdminCreateScreen extends javax.swing.JPanel {
             txtRePword.setBackground(Color.red);
             labelRePassword.setText("Doesnt match");
         }*/
-        String check = ""+evt.getKeyChar();
-        String compare = txtRePword.getText();
-        if(!check.isEmpty()){
-            compare += check;
-        }
-        if(txtPword.getText().equals(compare)){
-            txtPword.setBackground(Color.white);
-            btnCreate.setEnabled(true);
-        }else{
-            txtRePword.setBackground(Color.red);
-            btnCreate.setEnabled(false);
-        }
     }//GEN-LAST:event_txtRePwordKeyTyped
 
     public boolean passwordPatternCorrect() {
-       Pattern p = Pattern.compile("(^A-Za-z0-9@&$)");
+       Pattern p = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$");
        Matcher m = p.matcher(txtPword.getText());
-
-       boolean b = m.find();
+       JOptionPane.showMessageDialog(this, m.matches()+" Matches");
+       boolean b = m.matches();
        if(b == true){
            System.out.println("There is special character in my string");
            return false;
