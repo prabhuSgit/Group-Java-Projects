@@ -38,7 +38,7 @@ public abstract class User {
     
     abstract public boolean verify(String password);
 
-    public String getRole() {
+    public String getRole(){
         return role;
     }
 
