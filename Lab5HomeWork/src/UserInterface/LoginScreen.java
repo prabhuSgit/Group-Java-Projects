@@ -24,9 +24,10 @@ public class LoginScreen extends javax.swing.JPanel {
      * Creates new form LoginScreen
      */
     List<User> list;
-    JPanel panelRight;  
+    JPanel panelRight;
     private Admin admin;
     private User user;
+
     public LoginScreen(JPanel panelRight, List<User> list, Admin admin) {
         initComponents();
         this.list = list;
@@ -89,58 +90,58 @@ public class LoginScreen extends javax.swing.JPanel {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
-        if(txtPword.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Please fill Password Field");
-        }else{  
-            if(list == admin.getCustDir().getCustomerList()){
-                User selectedUser = (User)comboUser.getSelectedItem();
-            for(User user: admin.getCustDir().getCustomerList()){
-                 if (selectedUser.getPassword().equals(txtPword.getText())){
-                 CardLayout layout = (CardLayout)panelRight.getLayout();
-                panelRight.add(new SuccessScreen(panelRight, user));
-                layout.next(panelRight);
+        if (txtPword.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please fill Password Field");
+        } else {
+            if (list == admin.getCustDir().getCustomerList()) {
+                User selectedUser = (User) comboUser.getSelectedItem();
+                for (User user : admin.getCustDir().getCustomerList()) {
+                    if (selectedUser.getPassword().equals(txtPword.getText())) {
+                        CardLayout layout = (CardLayout) panelRight.getLayout();
+                        panelRight.add(new SuccessScreen(user));
+                        layout.next(panelRight);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Incorrect password");
+                        return;
+                    }
                 }
-            else
-                JOptionPane.showMessageDialog(null, "Incorrect password");
+            } else if (list == admin.getSuppDir().getSupplierList()) {
+                User selectedUser = (User) comboUser.getSelectedItem();
+                for (User user : admin.getSuppDir().getSupplierList()) {
+                    if (selectedUser.getPassword().equals(txtPword.getText())) {
+                        CardLayout layout = (CardLayout) panelRight.getLayout();
+                        panelRight.add(new SuccessScreen(user));
+                        layout.next(panelRight);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Incorrect password");
+                        return;
+                    }
+
+                }
             }
-        } else if (list == admin.getSuppDir().getSupplierList()){
-        for(User list: admin.getSuppDir().getSupplierList()){
-                 comboUser.addItem(list);
-                 
-            if (list.getPassword().equals(txtPword.getText())){
-                 JOptionPane.showMessageDialog(null, "login");
-                 CardLayout layout = (CardLayout)panelRight.getLayout();
-                panelRight.add(new SuccessScreen(panelRight, user));
-                layout.next(panelRight);
-        }
-            
-        }
-        }
         }
     }//GEN-LAST:event_btnSubmitActionPerformed
 
-    
-    private void initialize(){
+    private void initialize() {
         //text should either be "Supplier Login Screen" OR "Customer Login Screen"
         //Based on the selection
         comboUser.removeAllItems();
         //only customer or suppliers should be listed based on the selection
-        if(list == admin.getCustDir().getCustomerList()){
+        if (list == admin.getCustDir().getCustomerList()) {
             txtTitle.setText("Customer Login Screen");
-            for(User list: admin.getCustDir().getCustomerList()){
+            for (User list : admin.getCustDir().getCustomerList()) {
                 comboUser.addItem(list);
-                              
+
             }
-               
-       }
-        else{
+
+        } else {
             txtTitle.setText("Supplier Login Screen");
-            for(User list: admin.getSuppDir().getSupplierList()){
-                comboUser.addItem(list); 
+            for (User list : admin.getSuppDir().getSupplierList()) {
+                comboUser.addItem(list);
             }
         }
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSubmit;

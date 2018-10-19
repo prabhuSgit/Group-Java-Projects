@@ -19,7 +19,7 @@ public class SuccessScreen extends javax.swing.JPanel {
      */
     private User user; 
     JPanel panelRight;
-    public SuccessScreen(JPanel panelRight,User user) {
+    public SuccessScreen(User user) {
         initComponents();
         this.user = user;
         this.panelRight =panelRight;
