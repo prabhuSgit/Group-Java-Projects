@@ -6,6 +6,7 @@
 package UserInterface;
 
 import Business.Abstract.User;
+import Business.Users.Admin;
 import Business.Users.Customer;
 import Business.Users.Supplier;
 import java.awt.CardLayout;
@@ -24,10 +25,12 @@ public class LoginScreen extends javax.swing.JPanel {
      */
     List<User> list;
     JPanel panelRight;
-    public LoginScreen(JPanel panelRight, List<User> list) {
+    private Admin admin;
+    public LoginScreen(JPanel panelRight, List<User> list, Admin admin) {
         initComponents();
         this.list = list;
         this.panelRight = panelRight;
+        this.admin = admin;
         initialize();
     }
 
@@ -40,15 +43,15 @@ public class LoginScreen extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtPword = new javax.swing.JTextField();
-        btnSubmit = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
         comboUser = new javax.swing.JComboBox<Object>();
         txtTitle = new javax.swing.JLabel();
+        txtPword = new javax.swing.JPasswordField();
 
-        btnSubmit.setText("Login");
-        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubmitActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
 
@@ -60,12 +63,11 @@ public class LoginScreen extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(105, 105, 105)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSubmit)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtPword)
-                        .addComponent(comboUser, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtTitle))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnLogin)
+                    .addComponent(comboUser, 0, 166, Short.MAX_VALUE)
+                    .addComponent(txtTitle)
+                    .addComponent(txtPword))
                 .addContainerGap(150, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -75,33 +77,72 @@ public class LoginScreen extends javax.swing.JPanel {
                 .addComponent(txtTitle)
                 .addGap(18, 18, 18)
                 .addComponent(comboUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(11, 11, 11)
                 .addComponent(txtPword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnSubmit)
+                .addComponent(btnLogin)
                 .addContainerGap(97, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btnSubmitActionPerformed
+        if (txtPword.getText().isEmpty()) {
+           JOptionPane.showMessageDialog(null, "Please fill Password Field");
+        } else {
+           if (list == admin.getCustDir().getCustomerList()) {
+               User selectedUser = (User) comboUser.getSelectedItem();
+               for (User user : admin.getCustDir().getCustomerList()) {
+                   if (selectedUser.getPassword().equals(txtPword.getText())) {
+                       CardLayout layout = (CardLayout) panelRight.getLayout();
+                       panelRight.add(new SuccessScreen(selectedUser));
+                       layout.next(panelRight);
+                   } else {
+                       JOptionPane.showMessageDialog(null, "Incorrect password");
+                       return;
+                   }
+               }
+           } else if (list == admin.getSuppDir().getSupplierList()) {
+               User selectedUser = (User) comboUser.getSelectedItem();
+               for (User user : admin.getSuppDir().getSupplierList()) {
+                   if (selectedUser.getPassword().equals(txtPword.getText())) {
+                       CardLayout layout = (CardLayout) panelRight.getLayout();
+                       panelRight.add(new SuccessScreen(selectedUser));
+                       layout.next(panelRight);
+                   } else {
+                       JOptionPane.showMessageDialog(null, "Incorrect password");
+                       return;
+                   }
+                }
+            }
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     
     private void initialize(){
         //text should either be "Supplier Login Screen" OR "Customer Login Screen"
         //Based on the selection
-        txtTitle.setText("****** Login Screen");
         comboUser.removeAllItems();
         //only customer or suppliers should be listed based on the selection
+        if(list == admin.getCustDir().getCustomerList()){
+            txtTitle.setText("Customer Login Screen");
+            for(User list: admin.getCustDir().getCustomerList()){
+                comboUser.addItem(list);
+            }
+        }
+        else{
+            txtTitle.setText("Supplier Login Screen");
+            for(User user: admin.getSuppDir().getSupplierList()){
+                comboUser.addItem(user);
+            }
+        }
     }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSubmit;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JComboBox<Object> comboUser;
-    private javax.swing.JTextField txtPword;
+    private javax.swing.JPasswordField txtPword;
     private javax.swing.JLabel txtTitle;
     // End of variables declaration//GEN-END:variables
 }

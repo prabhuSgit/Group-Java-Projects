@@ -10,6 +10,7 @@ import Business.Users.Admin;
 import Business.Users.Customer;
 import Business.Users.Supplier;
 import java.awt.CardLayout;
+import java.text.SimpleDateFormat;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -118,13 +119,14 @@ public class AdminMainScreen extends javax.swing.JPanel {
         }
         
         DefaultTableModel dtm2 = (DefaultTableModel)tableCust.getModel();
-       dtm2.setRowCount(0);
-       for(User u: admin.getCustDir().getCustomerList()){
-           Customer c = (Customer)u;
-           Object[] row = new Object[dtm2.getColumnCount()];
-           row[0]=c;
-           row[1]=c.getDateCreated();
-           dtm2.addRow(row);
+        dtm2.setRowCount(0);
+        for(User u: admin.getCustDir().getCustomerList()){
+           SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Customer c = (Customer)u;
+            Object[] row = new Object[dtm2.getColumnCount()];
+            row[0]=c;
+            row[1]=formatter.format(c.getDateCreated());
+            dtm2.addRow(row);
        }
 
     }
