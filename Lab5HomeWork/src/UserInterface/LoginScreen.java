@@ -43,15 +43,15 @@ public class LoginScreen extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnSubmit = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
         comboUser = new javax.swing.JComboBox<Object>();
         txtTitle = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtPswrd = new javax.swing.JPasswordField();
 
-        btnSubmit.setText("Login");
-        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubmitActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
 
@@ -64,10 +64,10 @@ public class LoginScreen extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(105, 105, 105)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnSubmit)
+                    .addComponent(btnLogin)
                     .addComponent(comboUser, 0, 166, Short.MAX_VALUE)
                     .addComponent(txtTitle)
-                    .addComponent(jPasswordField1))
+                    .addComponent(txtPswrd))
                 .addContainerGap(150, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -78,17 +78,47 @@ public class LoginScreen extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(comboUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPswrd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnSubmit)
+                .addComponent(btnLogin)
                 .addContainerGap(97, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btnSubmitActionPerformed
+        if(list == admin.getCustDir().getCustomerList()){
+            for(User user : admin.getCustDir().getCustomerList()){
+                System.out.println("In for 1");
+                if(user.getPassword().equals(txtPswrd.getText())){
+                    CardLayout layout = (CardLayout)panelRight.getLayout();
+                    panelRight.add(new SuccessScreen(user));
+                    layout.next(panelRight);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Password Incorrect! Please enter the correct password.");
+                }
+            }
+        }
+        else if(list == admin.getSuppDir().getSupplierList())
+        {
+            System.out.println("In else 2");
+            for(User user: admin.getSuppDir().getSupplierList()){
+                System.out.println("In for2");
+                if(user.getPassword().equals(txtPswrd.getText())){
+                    CardLayout layout = (CardLayout)panelRight.getLayout();
+                    panelRight.add(new SuccessScreen(user));
+                    layout.next(panelRight);
+                    
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Password Incorrect! Please enter the correct password.");
+                }
+            }
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     
     private void initialize(){
@@ -98,21 +128,23 @@ public class LoginScreen extends javax.swing.JPanel {
         //only customer or suppliers should be listed based on the selection
         if(list == admin.getCustDir().getCustomerList()){
             txtTitle.setText("Customer Login Screen");
-            for(User list: admin.getCustDir().getCustomerList()){
-                comboUser.addItem(list);
+            for(User user: admin.getCustDir().getCustomerList()){
+                comboUser.addItem(user);
             }
         }
         else{
             txtTitle.setText("Supplier Login Screen");
-            
+            for(User user: admin.getSuppDir().getSupplierList()){
+                comboUser.addItem(user);
+            }
         }
     }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSubmit;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JComboBox<Object> comboUser;
-    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JPasswordField txtPswrd;
     private javax.swing.JLabel txtTitle;
     // End of variables declaration//GEN-END:variables
 }
