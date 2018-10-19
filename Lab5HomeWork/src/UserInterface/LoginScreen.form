@@ -22,7 +22,7 @@
                   <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
                   <Component id="comboUser" pref="166" max="32767" attributes="0"/>
                   <Component id="txtTitle" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtPswrd" alignment="0" max="32767" attributes="0"/>
+                  <Component id="txtPword" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="150" max="32767" attributes="0"/>
           </Group>
@@ -36,7 +36,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="comboUser" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-              <Component id="txtPswrd" min="-2" max="-2" attributes="0"/>
+              <Component id="txtPword" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="97" max="32767" attributes="0"/>
@@ -68,7 +68,7 @@
         <Property name="text" type="java.lang.String" value="Supplier Login Screen"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="txtPswrd">
+    <Component class="javax.swing.JPasswordField" name="txtPword">
     </Component>
   </SubComponents>
 </Form>
