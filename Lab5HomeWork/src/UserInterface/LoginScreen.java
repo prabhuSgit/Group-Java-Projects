@@ -91,18 +91,17 @@ public class LoginScreen extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(txtPword.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please fill Password Field");
-        }else{  //working good for only one entry in create
+        }else{  
             if(list == admin.getCustDir().getCustomerList()){
-            for(User list: admin.getCustDir().getCustomerList()){
-                 comboUser.addItem(list);
-                 if (list.getPassword().equals(txtPword.getText())){
-                 JOptionPane.showMessageDialog(null, "login");
+                User selectedUser = (User)comboUser.getSelectedItem();
+            for(User user: admin.getCustDir().getCustomerList()){
+                 if (selectedUser.getPassword().equals(txtPword.getText())){
                  CardLayout layout = (CardLayout)panelRight.getLayout();
                 panelRight.add(new SuccessScreen(panelRight, user));
                 layout.next(panelRight);
                 }
             else
-                JOptionPane.showMessageDialog(null, "User name and Password do not match");
+                JOptionPane.showMessageDialog(null, "Incorrect password");
             }
         } else if (list == admin.getSuppDir().getSupplierList()){
         for(User list: admin.getSuppDir().getSupplierList()){
