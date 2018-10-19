@@ -42,7 +42,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         this.admin = admin;
         initialize();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -167,10 +167,11 @@ public class AdminCreateScreen extends javax.swing.JPanel {
                 .addGap(38, 38, 38)
                 .addComponent(btnBack)
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(userError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(userError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)))
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -192,34 +193,37 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-        if(txtUser.getText().isEmpty()){
+        if (txtUser.getText().isEmpty()) {
             userError.setText("Kindly enter the username");
-        }
-        else
-        {
+        } else {
             userError.setText("");
-            if(passwordPatternCorrect()==true){
-            JOptionPane.showMessageDialog(this, "Password not as per the Password policy below:\n"
-                    + "A special character\n"
-                    + "A number\n"
-                    + "A uppercase\n"
-                    + "A lowercase");
-            return;
+            if (passwordPatternCorrect() == true) {
+                JOptionPane.showMessageDialog(this, "Password not as per the Password policy below:\n"
+                        + "A special character\n"
+                        + "A number\n"
+                        + "A uppercase\n"
+                        + "A lowercase");
+                return;
             }
-            if(radioUserBtnGrp.isSelected(radioCustomer.getModel())){
-                Customer customer = new Customer(new Date(),txtPword.getText(), txtUser.getText());
+            if (radioUserBtnGrp.isSelected(radioCustomer.getModel())) {
+                Customer customer = new Customer(new Date(), txtPword.getText(), txtUser.getText());
                 admin.getCustDir().getCustomerList().add(customer);
                 System.out.println(customer.getPassword());
                 JOptionPane.showMessageDialog(this, "Customer created successfully");
+                txtUser.setText("");
+                txtPword.setText("");
+                txtRePword.setText("");
                 radioUserBtnGrp.clearSelection();
-            }else if(radioUserBtnGrp.isSelected(radioSupplier.getModel())){
+            } else if (radioUserBtnGrp.isSelected(radioSupplier.getModel())) {
                 Supplier supplier = new Supplier(txtPword.getText(), txtUser.getText());
                 admin.getSuppDir().getSupplierList().add(supplier);
                 System.out.println(supplier.getPassword());
                 JOptionPane.showMessageDialog(this, "Supplier created successfully");
+                txtUser.setText("");
+                txtPword.setText("");
+                txtRePword.setText("");
                 radioUserBtnGrp.clearSelection();
-            }
-            else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Please select a type");
             }
         }
@@ -248,17 +252,22 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
     private void groupingbtn(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_groupingbtn
         // TODO add your handling code here:
-        if (radioCustomer.isSelected()) {
-            for (User customer : admin.custDir.getCustomerList()) {
-                if (customer.getUserName().contains(txtUser.getText())) {
-                    JOptionPane.showMessageDialog(null, "The Customer name already exists. Kindly use another name");
+        if (txtUser.getText().isEmpty()) {
+            userError.setText("User name required");
+        } else {
+            if (radioCustomer.isSelected()) {
+                for (User customer : admin.custDir.getCustomerList()) {
+                    if (customer.getUserName().contains(txtUser.getText())) {
+                        JOptionPane.showMessageDialog(null, "The Customer name already exists. Kindly use another name");
+                        radioUserBtnGrp.clearSelection();
+                    }
                 }
-            }
-
-        } else if (radioSupplier.isSelected()) {
-            for (User supplier : admin.suppDir.getSupplierList()) {
-                if (supplier.getUserName().contains(txtUser.getText())) {
-                    JOptionPane.showMessageDialog(null, "The Supplier name already exists. Kindly use another name");
+            } else if (radioSupplier.isSelected()) {
+                for (User supplier : admin.suppDir.getSupplierList()) {
+                    if (supplier.getUserName().contains(txtUser.getText())) {
+                        JOptionPane.showMessageDialog(null, "The Supplier name already exists. Kindly use another name");
+                        radioUserBtnGrp.clearSelection();
+                    }
                 }
             }
         }
@@ -271,33 +280,32 @@ public class AdminCreateScreen extends javax.swing.JPanel {
     private void txtRePwordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRePwordKeyTyped
         // TODO add your handling code here:
         checkForButtonVisibility();
-        String check = ""+evt.getKeyChar();
+        String check = "" + evt.getKeyChar();
         String compare = txtRePword.getText();
-        if(!check.isEmpty()){
+        if (!check.isEmpty()) {
             compare += check;
         }
-        if(txtPword.getText().equals(compare)){
+        if (txtPword.getText().equals(compare)) {
             btnCreate.setEnabled(true);
             txtRePword.setBackground(Color.white);
-        }else{
+        } else {
             btnCreate.setEnabled(false);
             txtRePword.setBackground(Color.red);
         }
     }//GEN-LAST:event_txtRePwordKeyTyped
 
     public boolean passwordPatternCorrect() {
-       Pattern p = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$");
-       Matcher m = p.matcher(txtPword.getText());
-       boolean b = m.matches();
-       if(b == true){
-           System.out.println("There is special character in my string");
-           return false;
-       }
-       else{
-           System.out.println("There is no speacial character");
-           return true;
-       }
-        
+        Pattern p = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$");
+        Matcher m = p.matcher(txtPword.getText());
+        boolean b = m.matches();
+        if (b == true) {
+            System.out.println("There is special character in my string");
+            return false;
+        } else {
+            System.out.println("There is no speacial character");
+            return true;
+        }
+
     }
 
     public void checkForButtonVisibility() {
@@ -309,7 +317,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
     }
 
-    private void initialize(){
+    private void initialize() {
         checkForButtonVisibility();
     }
 

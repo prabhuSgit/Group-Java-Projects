@@ -46,7 +46,7 @@ public class LoginScreen extends javax.swing.JPanel {
         btnLogin = new javax.swing.JButton();
         comboUser = new javax.swing.JComboBox<Object>();
         txtTitle = new javax.swing.JLabel();
-        txtPswrd = new javax.swing.JPasswordField();
+        txtPword = new javax.swing.JPasswordField();
 
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -67,7 +67,7 @@ public class LoginScreen extends javax.swing.JPanel {
                     .addComponent(btnLogin)
                     .addComponent(comboUser, 0, 166, Short.MAX_VALUE)
                     .addComponent(txtTitle)
-                    .addComponent(txtPswrd))
+                    .addComponent(txtPword))
                 .addContainerGap(150, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -78,7 +78,7 @@ public class LoginScreen extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(comboUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addComponent(txtPswrd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnLogin)
                 .addContainerGap(97, Short.MAX_VALUE))
@@ -87,37 +87,32 @@ public class LoginScreen extends javax.swing.JPanel {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        if(list == admin.getCustDir().getCustomerList()){
-            User selectedUser = (User)comboUser.getSelectedItem();
-            for(User user : admin.getCustDir().getCustomerList()){
-                System.out.println("In for 1");
-                if(selectedUser.getPassword().equals(txtPswrd.getText())){
-                    CardLayout layout = (CardLayout)panelRight.getLayout();
-                    panelRight.add(new SuccessScreen(user));
-                    layout.next(panelRight);
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(this, "Password Incorrect! Please enter the correct password.");
-                    return;
-                }
-            }
-        }
-        else if(list == admin.getSuppDir().getSupplierList())
-        {
-            System.out.println("In else 2");
-            for(User user: admin.getSuppDir().getSupplierList()){
-                System.out.println("In for2");
-                if(user.getPassword().equals(txtPswrd.getText())){
-                    CardLayout layout = (CardLayout)panelRight.getLayout();
-                    panelRight.add(new SuccessScreen(user));
-                    layout.next(panelRight);
-                    
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(this, "Password Incorrect! Please enter the correct password.");
-                    return;
+        if (txtPword.getText().isEmpty()) {
+           JOptionPane.showMessageDialog(null, "Please fill Password Field");
+        } else {
+           if (list == admin.getCustDir().getCustomerList()) {
+               User selectedUser = (User) comboUser.getSelectedItem();
+               for (User user : admin.getCustDir().getCustomerList()) {
+                   if (selectedUser.getPassword().equals(txtPword.getText())) {
+                       CardLayout layout = (CardLayout) panelRight.getLayout();
+                       panelRight.add(new SuccessScreen(selectedUser));
+                       layout.next(panelRight);
+                   } else {
+                       JOptionPane.showMessageDialog(null, "Incorrect password");
+                       return;
+                   }
+               }
+           } else if (list == admin.getSuppDir().getSupplierList()) {
+               User selectedUser = (User) comboUser.getSelectedItem();
+               for (User user : admin.getSuppDir().getSupplierList()) {
+                   if (selectedUser.getPassword().equals(txtPword.getText())) {
+                       CardLayout layout = (CardLayout) panelRight.getLayout();
+                       panelRight.add(new SuccessScreen(selectedUser));
+                       layout.next(panelRight);
+                   } else {
+                       JOptionPane.showMessageDialog(null, "Incorrect password");
+                       return;
+                   }
                 }
             }
         }
@@ -147,7 +142,7 @@ public class LoginScreen extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JComboBox<Object> comboUser;
-    private javax.swing.JPasswordField txtPswrd;
+    private javax.swing.JPasswordField txtPword;
     private javax.swing.JLabel txtTitle;
     // End of variables declaration//GEN-END:variables
 }
