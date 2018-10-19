@@ -105,7 +105,9 @@ public class LoginScreen extends javax.swing.JPanel {
         }
         else{
             txtTitle.setText("Supplier Login Screen");
-            
+            for(User list: admin.getSuppDir().getSupplierList()){
+                comboUser.addItem(list);
+            }
         }
     }
     
